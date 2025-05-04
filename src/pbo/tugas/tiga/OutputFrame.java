@@ -15,6 +15,7 @@ public class OutputFrame extends javax.swing.JFrame {
      */
     public OutputFrame(int usia, int berat, String gender, String aktivitas, double proteinMin, double proteinMax, int karboMin, int karboMax, int serat) {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(255,255,255));
         Aktivitas.setText(aktivitas);
         Berat.setText(String.valueOf(berat) + "kg");
         Gender.setText(gender);
