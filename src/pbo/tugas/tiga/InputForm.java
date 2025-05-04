@@ -177,7 +177,9 @@ public class InputForm extends javax.swing.JFrame {
             int karboMinimal, karboMaksimal, serat;
             
 //            hitung serat
-            if (usia <= 3) {
+            if (usia < 1 ) {
+                throw new NumberFormatException("Nilai usia tidak valid.");
+            } else if(usia <= 3) {
                 serat = 19;
             } else if(usia <= 8) {
                 serat = 25;
@@ -209,33 +211,27 @@ public class InputForm extends javax.swing.JFrame {
                 throw new NumberFormatException("Nilai usia tidak valid.");
             }
             
-//            hitung protein
-            if (aktivitas.equalsIgnoreCase("tidak aktif")) {
-                proteinMinimal = 0.8 * berat;
-                proteinMaksimal = 1.0 * berat;
-            } else if (aktivitas.equalsIgnoreCase("ringan") || aktivitas.equalsIgnoreCase("sedang")) {
-                proteinMinimal = 1.2 * berat;
-                proteinMaksimal = 1.6 * berat;
-            } else if (aktivitas.equalsIgnoreCase("berat")) {
-                proteinMinimal = 1.6 * berat;
-                proteinMaksimal = 2.2 * berat;
-            } else {
-                throw new NumberFormatException("Aktivias tidak valid.");
-            }
-            
 //            hitung karbo
             if (aktivitas.equalsIgnoreCase("tidak aktif")) {
                 karboMinimal = 2 * berat;
                 karboMaksimal = 3 * berat;
+                proteinMinimal = 0.8 * berat;
+                proteinMaksimal = 1.0 * berat;
             } else if (aktivitas.equalsIgnoreCase("ringan")) {
                 karboMinimal = 3 * berat;
                 karboMaksimal = 5 * berat;
+                proteinMinimal = 1.2 * berat;
+                proteinMaksimal = 1.6 * berat;
             } else if (aktivitas.equalsIgnoreCase("sedang")) {
                 karboMinimal = 5 * berat;
                 karboMaksimal = 7 * berat;
-            } else if (aktivitas.equalsIgnoreCase("berat") || aktivitas.equalsIgnoreCase("atlet")) {
+                proteinMinimal = 1.2 * berat;
+                proteinMaksimal = 1.6 * berat;
+            } else if (aktivitas.equalsIgnoreCase("berat")) {
                 karboMinimal = 6 * berat;
                 karboMaksimal = 10 * berat;
+                proteinMinimal = 1.6 * berat;
+                proteinMaksimal = 2.2 * berat;
             } else {
                 throw new NumberFormatException("Aktivitas tidak valid.");
             }
@@ -244,7 +240,15 @@ public class InputForm extends javax.swing.JFrame {
             output.setVisible(true);
             
         } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+            // javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+            ModalError dialog = new ModalError(new javax.swing.JFrame(), true, e.getMessage());
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
         }
     }//GEN-LAST:event_ButtonHitungMouseClicked
 
